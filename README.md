@@ -1,4 +1,4 @@
-# CICD-pipeline only for nginx weserver with pm2
+# CICD-pipeline only for nginx webserver with pm2
 
 ## What is it ?
 
