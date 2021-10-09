@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>welcome to the pipeline</h1>
+  
+   <button type = 'button' id="backend"></button>
+   <button type = 'button' id="frontend"></button><br><br><br>
+   <div id = "loghistory">
+    <h1>click the button to view deploy logs</h1><br><br>
+    <button type = 'button' id = 'logButton'>log history</button><br><br>
+    </div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+   <script src='/logs.js'></script>
+   <script>
+        var logsButton = document.getElementById('logButton')
+        var historyDiv = document.getElementById('loghistory') 
+        var temp = document.createElement('p')
+        logsButton.addEventListener('click',async ()=>{
+            if(logsButton.innerText!='minimize'){
+                 const data =await getLogs()
+                logsButton.innerHTML='minimize' 
+                temp.id = "temp"
+                temp.innerText = data;
+                historyDiv.appendChild(temp) 
+            }
+            else{
+                logsButton.innerHTML='log history';
+                temp.remove()
+            }
+
+        })
+
+    var key= localStorage.getItem('key')
+    var backendButton = document.getElementById('backend')
+    var link = document.createElement('a')
+    link.href='/backend?key='+key;
+    link.innerText = "API pipeline"
+    backendButton.appendChild(link)
+
+    // var frontendButton = document.getElementById('frontend')
+    // var link = document.createElement('a')
+    // link.href='/frontend?key='+key;
+    // link.innerText = "find-frontend"
+    // frontendButton.appendChild(link)
+
+   
+</script>
+</body>
+</html>

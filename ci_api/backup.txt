@@ -1,0 +1,16 @@
+'/run?key=<%=key %>'
+
+
+  <!--  -->
+
+  <% for(var i=0;i<logs.length;i++){%>
+            <h2>============================================================================</h2>
+            <h3>time stamp : </h3><p><%= logs[i].timeStamp%></p>>
+            <h3>deployer name : </h3><p><%= logs[i].deployerName%></p>
+            <h3>deploy path :</h3> <p><%= logs[i].deployerPath%></p>
+            <h3> logs :</h3><p></p><%= logs[i].deployerLogs%></p> 
+          
+     <%  } %>
+
+
+     ~/Desktop/myBranch/find-backend

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>backend</title>
+</head>
+<body>
+    <script>
+        const key = localStorage.getItem('key')
+    </script>
+    <h1>backend pipeline</h1>
+    <form id = "pipeline">
+        <label for="branch">branch:</label>
+        <select name="branch" id="branch">
+           <% for(var i=0;i<branch.length;i++){ %> 
+            <option value = "<%= branch[i] %>"><%= branch[i] %></option>
+            <% } %> 
+          </select>
+        <button type = 'submit' id ="run">run</button>
+    </form>
+   
+    <div id = 'logs'>
+    <h2>logs:</h2>
+    <br><br>
+    </div>
+    <br><br>
+   
+    <div id = "loghistory">
+        <h1>click the button to view log history</h1><br><br>
+        <button type = 'button' id = 'logButton'>log history</button><br><br>
+        </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/run.js"></script>
+    <script src='/logs.js'></script>
+    <script>
+        var logsButton = document.getElementById('logButton')
+        var historyDiv = document.getElementById('loghistory') 
+        var temp = document.createElement('p')
+        logsButton.addEventListener('click',async ()=>{
+            if(logsButton.innerText!='minimize'){
+                 const data =await getLogs()
+                logsButton.innerHTML='minimize' 
+                temp.id = "temp"
+                temp.innerText = data;
+                historyDiv.appendChild(temp) 
+            }
+            else{
+                logsButton.innerHTML='log history';
+                temp.remove()
+            }
+          
+
+            
+        })
+
+
+        const body = document.getElementsByTagName('body')[0]
+        const formData = document.getElementById('pipeline');
+        formData.addEventListener('submit',async (e)=>{
+            e.preventDefault()
+            var branch = e.target.branch.value
+            const button = document.getElementById('run')
+            button.type='button'
+            button.innerText="running"
+            const res = await runpipeline(branch)
+            if(res==1){
+                alert("pipeline error")
+                button.type='submit'
+                button.innerText="run"
+            }
+            else{
+                button.type='submit'
+                button.innerText="run"
+                const container = document.getElementById('logs')
+                const logs = document.createElement('logs')
+                logs.innerText = res.logs
+                container.appendChild(logs)
+            }
+        })
+
+    </script>
+</body>
+</html>
